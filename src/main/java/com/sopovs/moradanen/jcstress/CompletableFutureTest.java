@@ -3,7 +3,6 @@ package com.sopovs.moradanen.jcstress;
 import java.util.concurrent.CompletableFuture;
 
 import org.openjdk.jcstress.annotations.Actor;
-import org.openjdk.jcstress.annotations.Arbiter;
 import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
@@ -18,23 +17,16 @@ import org.openjdk.jcstress.infra.results.BooleanResult2;
 @State
 public class CompletableFutureTest {
   private final CompletableFuture<String> future = new CompletableFuture<>();
-  private boolean set;
-  private boolean cancel;
 
   @Actor
-  public void set() {
-    set = future.complete("foo");
+  public void set(BooleanResult2 r) {
+    r.r1 = future.complete("foo");
   }
 
   @Actor
-  public void cancel() {
-    cancel = future.cancel(true);
+  public void cancel(BooleanResult2 r) {
+    r.r2 = future.cancel(true);
   }
 
-  @Arbiter
-  public void arbiter(BooleanResult2 r) {
-    r.r1 = set;
-    r.r2 = cancel;
-  }
 
 }

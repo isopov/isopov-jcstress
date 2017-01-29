@@ -1,7 +1,6 @@
 package com.sopovs.moradanen.jcstress.spring;
 
 import org.openjdk.jcstress.annotations.Actor;
-import org.openjdk.jcstress.annotations.Arbiter;
 import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
@@ -21,23 +20,15 @@ import org.springframework.util.concurrent.SettableListenableFuture;
 @State
 public class SettableListenableFutureTest {
   private final SettableListenableFuture<String> future = new SettableListenableFuture<>();
-  private boolean set;
-  private boolean cancel;
 
   @Actor
-  public void set() {
-    set = future.set("foo");
+  public void set(BooleanResult2 r) {
+    r.r1 = future.set("foo");
   }
 
   @Actor
-  public void cancel() {
-    cancel = future.cancel(true);
-  }
-
-  @Arbiter
-  public void arbiter(BooleanResult2 r) {
-    r.r1 = set;
-    r.r2 = cancel;
+  public void cancel(BooleanResult2 r) {
+    r.r2 = future.cancel(true);
   }
 
 }
