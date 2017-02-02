@@ -8,11 +8,7 @@ import org.openjdk.jcstress.annotations.State;
 import org.openjdk.jcstress.infra.results.BooleanResult2;
 import org.springframework.util.concurrent.SettableListenableFuture;
 
-//Observed state   Occurrences   Expectation  Interpretation                                              
-//false, true       353,611    ACCEPTABLE  Successfully canceled                                       
-//true, false    12,737,382    ACCEPTABLE  Successfully set                                            
-// true, true       213,887     FORBIDDEN  Other cases are forbidden.
-
+//fixed int Spring-framework 4.3.7 and 5.0.M5
 @JCStressTest
 @Outcome(id = "true, false", expect = Expect.ACCEPTABLE, desc = "Successfully set")
 @Outcome(id = "false, true", expect = Expect.ACCEPTABLE, desc = "Successfully canceled")
