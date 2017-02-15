@@ -7,8 +7,14 @@ import org.openjdk.jcstress.annotations.Result;
 @Result
 @SuppressWarnings("serial")
 public class ServiceResult implements Serializable {
+    @sun.misc.Contended
+    @jdk.internal.vm.annotation.Contended
 	public boolean started, stopped;
+    @sun.misc.Contended
+    @jdk.internal.vm.annotation.Contended
 	public boolean running, starting;
+    @sun.misc.Contended
+    @jdk.internal.vm.annotation.Contended
 	public String stopping, terminated, failed;
 
 	@Override
