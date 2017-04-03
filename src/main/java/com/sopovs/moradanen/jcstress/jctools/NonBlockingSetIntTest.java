@@ -7,7 +7,7 @@ import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
-import org.openjdk.jcstress.infra.results.BooleanResult2;
+import org.openjdk.jcstress.infra.results.ZZ_Result;
 
 @JCStressTest
 @Outcome(id = "true, true", expect = Expect.ACCEPTABLE, desc = "Seeing both updates intact.")
@@ -28,7 +28,7 @@ public class NonBlockingSetIntTest {
   }
 
   @Arbiter
-  public void arbiter(BooleanResult2 r) {
+  public void arbiter(ZZ_Result r) {
     r.r1 = bs.contains(0);
     r.r2 = bs.contains(1);
   }

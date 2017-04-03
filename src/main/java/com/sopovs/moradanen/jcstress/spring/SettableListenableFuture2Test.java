@@ -6,7 +6,7 @@ import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
-import org.openjdk.jcstress.infra.results.BooleanResult4;
+import org.openjdk.jcstress.infra.results.ZZZZ_Result;
 import org.springframework.util.concurrent.SettableListenableFuture;
 
 //false, false, true, true       756,615    ACCEPTABLE  Successfully canceled                                       
@@ -31,17 +31,17 @@ public class SettableListenableFuture2Test {
 	}
 
 	@Actor
-	public void set(BooleanResult4 r) {
+	public void set(ZZZZ_Result r) {
 		r.r1 = future.set("foo");
 	}
 
 	@Actor
-	public void cancel(BooleanResult4 r) {
+	public void cancel(ZZZZ_Result r) {
 		r.r3 = future.cancel(true);
 	}
 
 	@Arbiter
-	public void arbiter(BooleanResult4 r) {
+	public void arbiter(ZZZZ_Result r) {
 		r.r2 = successCallback;
 		r.r4 = failCallback;
 	}

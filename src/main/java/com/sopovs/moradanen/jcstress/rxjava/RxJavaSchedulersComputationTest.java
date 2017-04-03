@@ -6,7 +6,7 @@ import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
-import org.openjdk.jcstress.infra.results.IntResult1;
+import org.openjdk.jcstress.infra.results.I_Result;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
@@ -54,7 +54,7 @@ public class RxJavaSchedulersComputationTest {
 	}
 
 	@Arbiter
-	public void arbiter(IntResult1 r) {
+	public void arbiter(I_Result r) {
 		r.r1 = counter;
 	}
 

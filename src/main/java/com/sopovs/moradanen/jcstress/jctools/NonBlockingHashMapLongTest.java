@@ -13,7 +13,7 @@ import org.openjdk.jcstress.annotations.Arbiter;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
-import org.openjdk.jcstress.infra.results.StringResult2;
+import org.openjdk.jcstress.infra.results.LL_Result;
 
 @JCStressTest
 @Outcome(expect = FORBIDDEN, desc = "Other cases are forbidden.")
@@ -45,7 +45,7 @@ public class NonBlockingHashMapLongTest {
   }
 
   @Arbiter
-  public void arbiter(StringResult2 s) {
+  public void arbiter(LL_Result s) {
     s.r1 = poll(0L, 0);
     s.r2 = poll(0L, 1);
   }

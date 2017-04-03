@@ -7,7 +7,7 @@ import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
-import org.openjdk.jcstress.infra.results.BooleanResult2;
+import org.openjdk.jcstress.infra.results.ZZ_Result;
 
 
 @JCStressTest
@@ -19,12 +19,12 @@ public class CompletableFutureTest {
   private final CompletableFuture<String> future = new CompletableFuture<>();
 
   @Actor
-  public void set(BooleanResult2 r) {
+  public void set(ZZ_Result r) {
     r.r1 = future.complete("foo");
   }
 
   @Actor
-  public void cancel(BooleanResult2 r) {
+  public void cancel(ZZ_Result r) {
     r.r2 = future.cancel(true);
   }
 

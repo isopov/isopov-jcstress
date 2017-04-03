@@ -7,7 +7,7 @@ import org.openjdk.jcstress.annotations.Arbiter;
 import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
-import org.openjdk.jcstress.infra.results.IntResult2;
+import org.openjdk.jcstress.infra.results.II_Result;
 
 import com.google.common.util.concurrent.AbstractService;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -42,7 +42,7 @@ public class ServiceStartTest {
 	}
 
 	@Arbiter
-	public void arbiter(IntResult2 r) {
+	public void arbiter(II_Result r) {
 		r.r1 = service.startCount.get();
 		r.r2 = listener.startingCount.get();
 	}
