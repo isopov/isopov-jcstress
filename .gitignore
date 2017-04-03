@@ -4,7 +4,7 @@
 .settings
 
 #Jcstress
-jcstress*
+jcstress-results*
 results
 
 #Maven
