@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.util.concurrent.SettableListenableFuture;
 
-public class SettableListenableFutureMainTest {
+public class SettableListenableFutureMain3Test {
 
 	public static void main(String[] args) {
 		BlockingQueue<ResultFutureContainer> queue1 = new LinkedBlockingQueue<>(), queue2 = new LinkedBlockingQueue<>();
