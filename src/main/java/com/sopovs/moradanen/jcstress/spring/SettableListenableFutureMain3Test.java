@@ -12,11 +12,11 @@ public class SettableListenableFutureMain3Test {
 		Thread thread1 = new SuccessThread(queue1), thread2 = new ExceptionThread(queue2);
 		thread1.start();
 		thread2.start();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			ResultFutureContainer container = new ResultFutureContainer();
 			queue1.add(container);
 			queue2.add(container);
-			while (!queue1.isEmpty() || !queue2.isEmpty()) {
+			while (!container.exceptionRun || !container.successRun) {
 				Thread.yield();
 			}
 			if (container.result.sucessCallback && !container.result.success) {
@@ -36,6 +36,7 @@ public class SettableListenableFutureMain3Test {
 
 	public static class ResultFutureContainer {
 		public final Result result = new Result();
+		public volatile boolean successRun, exceptionRun;
 		public final SettableListenableFuture<String> future = new SettableListenableFuture<>();
 
 		public ResultFutureContainer() {
@@ -56,6 +57,7 @@ public class SettableListenableFutureMain3Test {
 				try {
 					ResultFutureContainer container = queue.take();
 					container.result.success = container.future.set("foo");
+					container.successRun = true;
 				} catch (InterruptedException e) {
 					this.interrupt();
 				} catch (Exception e) {
@@ -78,6 +80,7 @@ public class SettableListenableFutureMain3Test {
 				try {
 					ResultFutureContainer container = queue.take();
 					container.result.exception = container.future.setException(new Exception());
+					container.exceptionRun = true;
 				} catch (InterruptedException e) {
 					this.interrupt();
 				} catch (Exception e) {
