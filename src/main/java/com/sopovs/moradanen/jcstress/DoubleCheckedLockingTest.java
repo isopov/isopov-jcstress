@@ -5,6 +5,7 @@ import org.openjdk.jcstress.annotations.Expect;
 import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
+import org.openjdk.jcstress.infra.results.ZZZ_Result;
 import org.openjdk.jcstress.infra.results.ZZ_Result;
 
 @JCStressTest
@@ -15,33 +16,25 @@ import org.openjdk.jcstress.infra.results.ZZ_Result;
 @State
 public class DoubleCheckedLockingTest {
 
-	private Singleton singleton;
+	private Object singleton;
 
-	public Singleton getSingleton() {
+	public Object getSingleton() {
 		if (singleton == null)
 			synchronized (this) {
 				if (singleton == null)
-					singleton = new Singleton();
+					singleton = new Object();
 			}
 		return singleton;
 	}
 
 	@Actor
 	public void first(ZZ_Result r) {
-		r.r1 = getSingleton().state != null;
+		r.r1 = getSingleton() != null;
 	}
 
 	@Actor
 	public void second(ZZ_Result r) {
-		r.r2 = getSingleton().state != null;
-	}
-
-	public static class Singleton {
-		public Object state;
-
-		public Singleton() {
-			state = new Object();
-		}
+		r.r2 = getSingleton() != null;
 	}
 
 }

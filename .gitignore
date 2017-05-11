@@ -12,3 +12,7 @@ target
 
 #Gedit
 *~
+
+#Idea
+.idea
+*.iml
