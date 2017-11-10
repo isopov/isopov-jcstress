@@ -7,7 +7,9 @@ import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
 import org.openjdk.jcstress.infra.results.ZZZZZ_Result;
+import org.springframework.util.concurrent.FailureCallback;
 import org.springframework.util.concurrent.SettableListenableFuture;
+import org.springframework.util.concurrent.SuccessCallback;
 
 @JCStressTest
 @Outcome(id = "true, false, false, true, false", expect = Expect.ACCEPTABLE, desc = "Successfully set")
@@ -17,15 +19,32 @@ import org.springframework.util.concurrent.SettableListenableFuture;
 @State
 public class SettableListenableFuture5Test {
 
-
 	private volatile boolean failCallback;
 	private volatile boolean successCallback;
 
 	private final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
 	public SettableListenableFuture5Test() {
-		future.addCallback(res -> successCallback = true, ex -> failCallback = true);
+		future.addCallback(
+				new SuccessCallback<String>() {
+
+					@Override
+					public void onSuccess(String result) {
+						successCallback = true;
+
+					}
+				},
+				new FailureCallback() {
+
+					@Override
+					public void onFailure(Throwable ex) {
+						failCallback = true;
+
+					}
+
+				});
 	}
+
 	@Actor
 	public void set(ZZZZZ_Result r) {
 		r.r1 = future.set("foo");
@@ -35,6 +54,7 @@ public class SettableListenableFuture5Test {
 	public void cancel(ZZZZZ_Result r) {
 		r.r2 = future.cancel(true);
 	}
+
 	@Actor
 	public void setException(ZZZZZ_Result r) {
 		r.r3 = future.setException(new Exception());
@@ -45,6 +65,5 @@ public class SettableListenableFuture5Test {
 		r.r4 = successCallback;
 		r.r5 = failCallback;
 	}
-	
 
 }

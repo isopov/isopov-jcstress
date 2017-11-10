@@ -7,7 +7,9 @@ import org.openjdk.jcstress.annotations.JCStressTest;
 import org.openjdk.jcstress.annotations.Outcome;
 import org.openjdk.jcstress.annotations.State;
 import org.openjdk.jcstress.infra.results.ZZZZ_Result;
+import org.springframework.util.concurrent.FailureCallback;
 import org.springframework.util.concurrent.SettableListenableFuture;
+import org.springframework.util.concurrent.SuccessCallback;
 
 //false, false, true, true       756,615    ACCEPTABLE  Successfully canceled                                       
 //true, false, false, true       161,930     FORBIDDEN  Other cases are forbidden.                                  
@@ -26,8 +28,23 @@ public class SettableListenableFuture2Test {
 
 	public SettableListenableFuture2Test() {
 		future.addCallback(
-				res -> successCallback = true,
-				ex -> failCallback = true);
+				new SuccessCallback<String>() {
+
+					@Override
+					public void onSuccess(String result) {
+						successCallback = true;
+
+					}
+				},
+				new FailureCallback() {
+
+					@Override
+					public void onFailure(Throwable ex) {
+						failCallback = true;
+
+					}
+
+				});
 	}
 
 	@Actor
