@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jcstress.version>0.4</jcstress.version>
-		<javac.target>1.8</javac.target>
+		<javac.target>1.6</javac.target>
 		<uberjar.name>jcstress</uberjar.name>
 	</properties>
 
@@ -30,29 +30,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jctools</groupId>
-			<artifactId>jctools-core</artifactId>
-			<version>2.1.1</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>5.0.1.RELEASE</version>
+			<version>4.3.12.RELEASE</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>23.2-jre</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.reactivex.rxjava2</groupId>
-			<artifactId>rxjava</artifactId>
-			<version>2.1.5</version>
-		</dependency>
-
 	</dependencies>
 
 
