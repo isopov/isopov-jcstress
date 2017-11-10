@@ -1,15 +1,16 @@
 package com.sopovs.moradanen.jcstress.spring;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import org.springframework.util.concurrent.SettableListenableFuture;
 
 public class SettableListenableFutureMainTest {
 
 	public static void main(String[] args) throws InterruptedException {
-		BlockingQueue<SettableListenableFuture<String>> queue = new LinkedBlockingQueue<SettableListenableFuture<String>>();
+		BlockingQueue<SettableFuture<String>> queue = new LinkedBlockingQueue<SettableFuture<String>>();
 		Thread thread1 = new ProducerThread(queue), thread2 = new ConsumerThread(queue);
 		thread1.start();
 		thread2.start();
@@ -20,16 +21,16 @@ public class SettableListenableFutureMainTest {
 	}
 
 	static class ProducerThread extends Thread {
-		private final BlockingQueue<SettableListenableFuture<String>> queue;
+		private final BlockingQueue<SettableFuture<String>> queue;
 
-		public ProducerThread(BlockingQueue<SettableListenableFuture<String>> queue) {
+		public ProducerThread(BlockingQueue<SettableFuture<String>> queue) {
 			this.queue = queue;
 		}
 
 		@Override
 		public void run() {
 			while (!this.isInterrupted()) {
-				SettableListenableFuture<String> ss = new SettableListenableFuture<String>();
+				SettableFuture<String> ss = new SettableFuture<String>();
 				ss.set("FooBar!");
 				queue.offer(ss);
 			}
@@ -37,9 +38,9 @@ public class SettableListenableFutureMainTest {
 	}
 
 	static class ConsumerThread extends Thread {
-		private final BlockingQueue<SettableListenableFuture<String>> queue;
+		private final BlockingQueue<SettableFuture<String>> queue;
 
-		public ConsumerThread(BlockingQueue<SettableListenableFuture<String>> queue) {
+		public ConsumerThread(BlockingQueue<SettableFuture<String>> queue) {
 			this.queue = queue;
 		}
 
@@ -47,7 +48,7 @@ public class SettableListenableFutureMainTest {
 		public void run() {
 			while (!this.isInterrupted()) {
 				try {
-					SettableListenableFuture<String> future = queue.take();
+					SettableFuture<String> future = queue.take();
 					if (null == future.get()) {
 						System.out.println("WAT!");
 						return;
@@ -58,6 +59,28 @@ public class SettableListenableFutureMainTest {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	public static class SettableFuture<V> extends FutureTask<V> {
+		private static final Callable<Object> DUMMY = new Callable<Object>() {
+
+			@Override
+			public Object call() throws Exception {
+				throw new RuntimeException("Should not be called");
+			}
+		};
+
+		public SettableFuture() {
+			super((Callable<V>) DUMMY);
+		}
+
+		public V get() throws InterruptedException, ExecutionException {
+			return super.get();
+		}
+
+		public void set(V value) {
+			super.set(value);
 		}
 	}
 
