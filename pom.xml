@@ -22,12 +22,6 @@
 			<artifactId>jcstress-core</artifactId>
 			<version>${jcstress.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.openjdk.jcstress</groupId>
-			<artifactId>jcstress-samples</artifactId>
-			<version>${jcstress.version}</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
