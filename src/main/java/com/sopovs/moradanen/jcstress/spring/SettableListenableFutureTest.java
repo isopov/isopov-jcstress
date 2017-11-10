@@ -15,7 +15,7 @@ import org.springframework.util.concurrent.SettableListenableFuture;
 @Outcome(expect = Expect.FORBIDDEN, desc = "Other cases are forbidden.")
 @State
 public class SettableListenableFutureTest {
-  private final SettableListenableFuture<String> future = new SettableListenableFuture<>();
+  private final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
   @Actor
   public void set(ZZ_Result r) {

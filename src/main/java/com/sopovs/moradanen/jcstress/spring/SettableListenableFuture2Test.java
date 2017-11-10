@@ -22,7 +22,7 @@ public class SettableListenableFuture2Test {
 	private boolean failCallback;
 	private boolean successCallback;
 
-	private final SettableListenableFuture<String> future = new SettableListenableFuture<>();
+	private final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
 	public SettableListenableFuture2Test() {
 		future.addCallback(

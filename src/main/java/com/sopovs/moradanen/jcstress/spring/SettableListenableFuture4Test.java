@@ -17,7 +17,7 @@ import org.springframework.util.concurrent.SettableListenableFuture;
 public class SettableListenableFuture4Test {
 
 
-	private final SettableListenableFuture<String> future = new SettableListenableFuture<>();
+	private final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
 	@Actor
 	public void set(ZZZ_Result r) {

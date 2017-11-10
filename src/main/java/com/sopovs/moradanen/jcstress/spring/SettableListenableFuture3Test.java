@@ -23,7 +23,7 @@ public class SettableListenableFuture3Test {
 	private volatile boolean failCallback;
 	private volatile boolean successCallback;
 
-	private final SettableListenableFuture<String> future = new SettableListenableFuture<>();
+	private final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
 	public SettableListenableFuture3Test() {
 		future.addCallback(res -> successCallback = true, ex -> failCallback = true);
