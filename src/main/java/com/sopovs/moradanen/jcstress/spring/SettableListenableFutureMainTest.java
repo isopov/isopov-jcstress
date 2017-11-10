@@ -3,12 +3,15 @@ package com.sopovs.moradanen.jcstress.spring;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.springframework.util.concurrent.FailureCallback;
 import org.springframework.util.concurrent.SettableListenableFuture;
+import org.springframework.util.concurrent.SuccessCallback;
 
 public class SettableListenableFutureMainTest {
 
 	public static void main(String[] args) {
-		BlockingQueue<ResultFutureContainer> queue1 = new LinkedBlockingQueue<ResultFutureContainer>(), queue2 = new LinkedBlockingQueue<ResultFutureContainer>();
+		BlockingQueue<ResultFutureContainer> queue1 = new LinkedBlockingQueue<ResultFutureContainer>(),
+				queue2 = new LinkedBlockingQueue<ResultFutureContainer>();
 		Thread thread1 = new SuccessThread(queue1), thread2 = new ExceptionThread(queue2);
 		thread1.start();
 		thread2.start();
@@ -37,10 +40,28 @@ public class SettableListenableFutureMainTest {
 	public static class ResultFutureContainer {
 		public final Result result = new Result();
 		public volatile boolean successRun, exceptionRun;
-		public final SettableListenableFuture<String> future = new SettableListenableFuture<>();
+		public final SettableListenableFuture<String> future = new SettableListenableFuture<String>();
 
 		public ResultFutureContainer() {
-			future.addCallback(res -> result.sucessCallback = true, ex -> result.failCallback = true);
+			future.addCallback(
+					new SuccessCallback<String>() {
+
+						@Override
+						public void onSuccess(String unused) {
+							result.sucessCallback = true;
+
+						}
+					},
+					new FailureCallback() {
+
+						@Override
+						public void onFailure(Throwable ex) {
+							result.failCallback = true;
+
+						}
+
+					});
+
 		}
 	}
 
